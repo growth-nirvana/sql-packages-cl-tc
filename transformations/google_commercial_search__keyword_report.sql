@@ -40,7 +40,7 @@ CREATE OR REPLACE TABLE
 
         sync_info as (
             select
-              max(datetime(_fivetran_synced, "{{ vars.timezone }}")) as max_synced_at
+              max(current_datetime()) as max_synced_at
               , max(date) as max_data_date
             from {{source_dataset_id}}.{{source_table_id}}
             {% if number_of_accounts > 0 %}
