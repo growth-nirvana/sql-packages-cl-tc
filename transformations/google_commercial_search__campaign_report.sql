@@ -74,6 +74,8 @@ CREATE OR REPLACE TABLE
                 , sum(conversions) as conversions
                 , sum(conversions_value) as conversions_value
                 , sum(phone_calls) as phone_calls
+                , sum(search_impression_share) as search_impression_share
+                , sum(search_absolute_top_impression_share) as search_absolute_top_impression_share
             from
                 {{source_dataset_id}}.{{source_table_id}}
             {% if number_of_accounts > 0 %}
@@ -168,6 +170,8 @@ CREATE OR REPLACE TABLE
                 , report.conversions
                 , report.conversions_value
                 , report.phone_calls
+                , report.search_absolute_top_impression_share
+                , report.search_impression_share
                 
                 /* ************************************
                     Sync Info Section
