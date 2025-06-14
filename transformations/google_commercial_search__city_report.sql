@@ -40,7 +40,7 @@ CREATE OR REPLACE TABLE
         */
         sync_info as (
             select
-              max(datetime(_fivetran_synced, "{{ vars.timezone }}")) as max_synced_at
+              max(current_datetime()) as max_synced_at
               , max(date) as max_data_date
             from {{source_dataset_id}}.{{source_table_id}}
             {% if number_of_accounts > 0 %}
@@ -228,11 +228,11 @@ CREATE OR REPLACE TABLE
             left join
                 {{ geotargets_table_id }} as country_criteria
             on
-                report.country_criterion_id = country_criteria.criteria_id
+                safe_cast(report.country_criterion_id as string) = safe_cast(country_criteria.criteria_id as string)
             left join
                 {{ geotargets_table_id }} as city_criteria
             on
-                report.city_criteria_id = city_criteria.criteria_id
+                safe_cast(report.city_criteria_id as string) = safe_cast(city_criteria.criteria_id as string)
             left join
                 sync_info
             on
