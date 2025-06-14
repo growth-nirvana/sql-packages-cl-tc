@@ -1,0 +1,1106 @@
+vars:
+    ## Package attribute level configurations
+    account_name: 'Target Continuum'
+    output_dataset_id: account_239_fivetran_log_client_connector_916_unheard_playing
+    timezone: 'UTC'
+    
+    ## Model Configurations
+    ## Connector Service
+    combined_report:
+        active: true
+        dataset_id: 
+        table_id: 'combined_report'
+        models:
+           combined_report:
+                channels:
+                    facebook:
+                        source_table_id: facebook__ad_report
+                        dimensions:
+                            - {expression: account_id, name: account_id, type: STRING}
+                            - {expression: account_name, name: account_name, type: STRING}
+                            - {expression: campaign_id, name: campaign_id, type: STRING}
+                            - {expression: campaign_name, name: campaign_name, type: STRING}
+                            - {expression: date, name: date, type: DATE}
+                            - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                            - {expression: last_data_date, name: last_data_date, type: DATE}
+                            - {expression: "'Facebook'", name: channel, type: STRING}
+                        metrics:
+                            - {expression: sum(_cost), name: _cost, type: FLOAT64}
+                            - {expression: sum(_impressions), name: _impressions, type: INT64}
+                            - {expression: sum(_clicks), name: _clicks, type: INT64}
+                            - {expression: sum(_conversions), name: _conversions, type: INT64}
+                            - {expression: sum(_revenue), name: _revenue, type: FLOAT64}
+                    google_ad_grant:
+                        source_table_id: google_ad_grant__ad_report
+                        dimensions:
+                            - {expression: account_id , name: account_id, type: STRING}
+                            - {expression: account_name, name: account_name, type: STRING}
+                            - {expression: campaign_id , name: campaign_id, type: STRING}
+                            - {expression: campaign_name, name: campaign_name, type: STRING}
+                            - {expression: date, name: date, type: DATE}
+                            - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                            - {expression: last_data_date, name: last_data_date, type: DATE}
+                            - {expression: "'Google Ad Grant'", name: channel, type: STRING}
+                        metrics:
+                            - {expression: sum(_cost), name: _cost, type: FLOAT64}
+                            - {expression: sum(_impressions), name: _impressions, type: INT64}
+                            - {expression: sum(_clicks), name: _clicks, type: INT64}
+                            - {expression: sum(_conversions), name: _conversions, type: INT64}
+                            - {expression: sum(_revenue), name: _revenue, type: FLOAT64}
+                    google_commercial_search:
+                        source_table_id: google_commercial_search__ad_report
+                        dimensions:
+                            - {expression: account_id , name: account_id, type: STRING}
+                            - {expression: account_name, name: account_name, type: STRING}
+                            - {expression: campaign_id , name: campaign_id, type: STRING}
+                            - {expression: campaign_name, name: campaign_name, type: STRING}
+                            - {expression: date, name: date, type: DATE}
+                            - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                            - {expression: last_data_date, name: last_data_date, type: DATE}
+                            - {expression: "'Google Commercial Search'", name: channel, type: STRING}
+                        metrics:
+                            - {expression: sum(_cost), name: _cost, type: FLOAT64}
+                            - {expression: sum(_impressions), name: _impressions, type: INT64}
+                            - {expression: sum(_clicks), name: _clicks, type: INT64}
+                            - {expression: sum(_conversions), name: _conversions, type: INT64}
+                            - {expression: sum(_revenue), name: _revenue, type: FLOAT64}
+                    agility:
+                        source_table_id: agility__ad_report
+                        dimensions:
+                            - {expression: advertiser_id , name: account_id, type: STRING}
+                            - {expression: advertiser_name, name: account_name, type: STRING}
+                            - {expression: campaign_id , name: campaign_id, type: STRING}
+                            - {expression: campaign_name, name: campaign_name, type: STRING}
+                            - {expression: date, name: date, type: DATE}
+                            - {expression: 'NULL', name: last_synced_at, type: DATETIME}
+                            - {expression: 'NULL', name: last_data_date, type: DATE}
+                            - {expression: "'Display Advertising'", name: channel, type: STRING}
+                        metrics:
+                            - {expression: sum(_advertiser_cost), name: _cost, type: FLOAT64}
+                            - {expression: sum(_impressions), name: _impressions, type: INT64}
+                            - {expression: sum(_clicks), name: _clicks, type: INT64}
+                            - {expression: sum(_conversions), name: _conversions, type: INT64}
+                            - {expression: sum(_conversion_revenue), name: _revenue, type: FLOAT64}
+    ## Connector Service    
+    facebook_ads: 
+        source_dataset_id: account_239_facebook_ads_fivetran_connector_921
+        active: false
+        account_ids: []
+        regexp_filters:
+            ## - { dimension: 'campaign_name', expression: "Name", result: true }
+        actions: true
+        action_values: false
+        conversions:
+            - {event_name: "call_confirm_grouped", output_name: "call_confirm_grouped"}
+            - {event_name: "click_to_call_call_confirm", output_name: "click_to_call_call_confirm"}
+            - {event_name: "comment", output_name: "comment"}
+            - {event_name: "complete_registration", output_name: "complete_registration"}
+            - {event_name: "initiate_checkout", output_name: "initiate_checkout"}
+            - {event_name: "landing_page_view", output_name: "landing_page_view"}
+            - {event_name: "lead", output_name: "lead"}
+            - {event_name: "leadgen_grouped", output_name: "leadgen_grouped"}
+            - {event_name: "like", output_name: "likes"}
+            - {event_name: "link_click", output_name: "link_click"}
+            - {event_name: "offsite_conversion.fb_pixel_complete_registration", output_name: "fb_pixel_complete_registration"}
+            - {event_name: "offsite_conversion.fb_pixel_custom", output_name: "fb_pixel_custom"}
+            - {event_name: "offsite_conversion.fb_pixel_initiate_checkout", output_name: "fb_pixel_initiate_checkout"}
+            - {event_name: "offsite_conversion.fb_pixel_lead", output_name: "fb_pixel_lead"}
+            - {event_name: "offsite_conversion.fb_pixel_purchase", output_name: "fb_pixel_purchase"}
+            - {event_name: "offsite_conversion.fb_pixel_search", output_name: "fb_pixel_search"}
+            - {event_name: "offsite_conversion.fb_pixel_view_content", output_name: "fb_pixel_view_content"}
+            - {event_name: "omni_complete_registration", output_name: "omni_complete_registration"}
+            - {event_name: "omni_initiated_checkout", output_name: "omni_initiated_checkout"}
+            - {event_name: "omni_purchase", output_name: "omni_purchase"}
+            - {event_name: "omni_search", output_name: "omni_search"}
+            - {event_name: "omni_view_content", output_name: "omni_view_content"}
+            - {event_name: "onsite_conversion.lead_grouped", output_name: "lead_grouped"}
+            - {event_name: "onsite_conversion.messaging_block", output_name: "messaging_block"}
+            - {event_name: "onsite_conversion.messaging_conversation_started_7d", output_name: "messaging_conversation_started_7d"}
+            - {event_name: "onsite_conversion.messaging_first_reply", output_name: "messaging_first_reply"}
+            - {event_name: "onsite_conversion.other", output_name: "other"}
+            - {event_name: "onsite_conversion.post_save", output_name: "post_save"}
+            - {event_name: "page_engagement", output_name: "page_engagement"}
+            - {event_name: "photo_view", output_name: "photo_view"}
+            - {event_name: "post", output_name: "post"}
+            - {event_name: "post_engagement", output_name: "post_engagement"}
+            - {event_name: "post_reaction", output_name: "post_reaction"}
+            - {event_name: "purchase", output_name: "purchase"}
+            - {event_name: "rsvp", output_name: "rsvp"}
+            - {event_name: "search", output_name: "search"}
+            - {event_name: "video_view", output_name: "video_view"}
+            - {event_name: "view_content", output_name: "view_content"}
+        delimiters:
+            ad_set: "_"
+            campaign: "_"
+        models:
+            facebook__actions:
+                active: true
+                table_id: facebook__actions
+                dimensions:
+                    - {expression: action_type, name: action_type, type: STRING}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                metrics:
+                    - {expression: sum(value), name: value, type: FLOAT64}       
+            facebook__ad_report:
+                active: true
+                table_id: 'facebook__ad_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_set_id, name: ad_set_id, type: STRING}
+                    - {expression: ad_set_name, name: ad_set_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: campaign_pos_1, name: campaign_pos_1, type: string}
+                    - {expression: campaign_pos_2, name: campaign_pos_2, type: string}
+                    - {expression: campaign_pos_3, name: campaign_pos_3, type: string}
+                    - {expression: campaign_pos_4, name: campaign_pos_4, type: string}
+                    - {expression: campaign_pos_5, name: campaign_pos_5, type: string}
+                    - {expression: ad_set_pos_1, name: ad_set_pos_1, type: string}
+                    - {expression: ad_set_pos_2, name: ad_set_pos_2, type: string}
+                    - {expression: ad_set_pos_3, name: ad_set_pos_3, type: string}
+                    - {expression: ad_set_pos_4, name: ad_set_pos_4, type: string}
+                    - {expression: ad_set_pos_5, name: ad_set_pos_5, type: string}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(actions_purchase), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_purchase), name: actions_purchase, type: float64}
+                    - {expression: sum(actions_lead), name: actions_lead, type: float64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+                    - {expression: sum(actions_call_confirm_grouped), name: actions_call_confirm_grouped, type: float64}
+                    - {expression: sum(actions_click_to_call_call_confirm), name: actions_click_to_call_call_confirm, type: float64}
+                    ## Examples of how to use conversions. actions = true by default so all of the conversions.output_name
+                    ## above will have a corresponding column prefixed with actions_
+                    ## If you enable action_values or unique_actions by setting action_values = true
+                    ## or unique_actions = true then each conversion.output_name will have a corresponding column
+                    ## with unique_actions_ and action_values_
+                    ## - {expression: sum(action_values_purchase), name: action_values_purchase, type: FLOAT64}
+            facebook__age_report:
+                active: true
+                table_id: facebook__age_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: age, name: age, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+            facebook__country_report:
+                active: false
+                table_id: facebook__country_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+            facebook__device_report:
+                active: true
+                table_id: facebook__device_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: device, name: device, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+            facebook__gender_report:
+                active: false
+                table_id: facebook__gender_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: gender, name: gender, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+                    ## There is really no reason to add conversion events here because after
+                    ## iOS 14.1 conversion events don't show up in demographic reports.
+            facebook__platform_report:
+                active: false
+                table_id: facebook__platform_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: platform, name: platform, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+            facebook__region_report:
+                active: false
+                table_id: facebook__region_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: region, name: region, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+            facebook__dma_report:
+                active: false ## To enable this report, please contact support.
+                table_id: facebook__dma_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_id, name: ad_id, type: STRING}
+                    - {expression: ad_name, name: ad_name, type: STRING}
+                    - {expression: dma, name: dma, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: 0, name: _revenue, type: FLOAT64}
+                    - {expression: sum(actions_link_click), name: actions_link_click, type: float64}
+                    - {expression: sum(actions_comment), name: actions_comment, type: float64}
+                    - {expression: sum(actions_likes), name: actions_likes, type: float64}
+    ## Connector Service    
+    google_ads_grant:  # Google Ad Grant 
+        source_dataset_id: organization_7_account_239_unfounded_cradle_account_googleads_client_worthiest_salesman #account_239_google_ads_fivetran_connector_
+        active: true
+        account_ids: [9253565574]
+        conversions:
+            - {event_name: "Website Calls", output_name: website_calls }
+            - {event_name: "Calls from ads", output_name: calls_from_ads }
+        delimiters:
+            ad_group: "-"
+            campaign: "-"
+        models:
+            google_ad_grant__ad_report:
+                active: true
+                table_id: 'google_ad_grant__ad_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_group_id, name: ad_group_id, type: STRING}
+                    - {expression: ad_group_name, name: ad_group_name, type: STRING}
+                    - {expression: final_url, name: final_url, type: STRING}
+                    - {expression: path_1, name: path_1, type: STRING}
+                    - {expression: path_2, name: path_2, type: STRING}
+                    - {expression: description, name: description, type: STRING}
+                    - {expression: headline, name: headline, type: STRING}
+                    - {expression: full_display_url, name: full_display_url, type: STRING}
+                    - {expression: campaign_start_date, name: campaign_start_date, type: DATE}
+                    - {expression: campaign_end_date, name: campaign_end_date, type: DATE}
+                    - {expression: campaign_pos_1, name: campaign_pos_1, type: string}
+                    - {expression: campaign_pos_2, name: campaign_pos_2, type: string}
+                    - {expression: campaign_pos_3, name: campaign_pos_3, type: string}
+                    - {expression: campaign_pos_4, name: campaign_pos_4, type: string}
+                    - {expression: campaign_pos_5, name: campaign_pos_5, type: string}
+                    - {expression: ad_group_pos_1, name: ad_group_pos_1, type: string}
+                    - {expression: ad_group_pos_2, name: ad_group_pos_2, type: string}
+                    - {expression: ad_group_pos_3, name: ad_group_pos_3, type: string}
+                    - {expression: ad_group_pos_4, name: ad_group_pos_4, type: string}
+                    - {expression: ad_group_pos_5, name: ad_group_pos_5, type: string}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(all_conversions_website_calls), name: _all_conversions_website_calls, type: INT64}
+                    - {expression: sum(all_conversions_calls_from_ads), name: _all_conversions_calls_from_ads, type: INT64}
+            google_ad_grant__age_report:
+                active: true
+                table_id: google_ad_grant__age_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: age_range, name: age_range, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(all_conversions_website_calls), name: _all_conversions_website_calls, type: INT64}
+                    - {expression: sum(all_conversions_calls_from_ads), name: _all_conversions_calls_from_ads, type: INT64}
+            google_ad_grant__campaign_report:
+                active: true
+                table_id: 'google_ad_grant__campaign_report'
+                source_table_id: 'campaign_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: campaign_pos_1, name: campaign_pos_1, type: string}
+                    - {expression: campaign_pos_2, name: campaign_pos_2, type: string}
+                    - {expression: campaign_pos_3, name: campaign_pos_3, type: string}
+                    - {expression: campaign_pos_4, name: campaign_pos_4, type: string}
+                    - {expression: campaign_pos_5, name: campaign_pos_5, type: string}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(phone_calls), name: _phone_calls, type: float64}
+            google_ad_grant__campaign_report_custom_conversions:
+                active: true
+                table_id: 'google_ad_grant__campaign_report_custom_conversions'
+                source_table_id: 'campaign_report_custom_conversions'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: conversion_action_name, name: conversion_action_name, type: STRING}
+                metrics:
+                    - {expression: sum(all_conversions), name: all_conversions, type: FLOAT64}
+                    - {expression: sum(all_conversions_value), name: all_conversions_value, type: FLOAT64}
+                    - {expression: sum(conversions), name: conversions, type: FLOAT64}
+                    - {expression: sum(conversions_value), name: conversions_value, type: FLOAT64}
+            google_ad_grant__city_report:
+                active: false
+                table_id: google_ad_grant__city_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: city, name: city, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}          
+            google_ad_grant__conversion_actions:
+                active: true
+                table_id: google_ad_grant__conversion_actions
+                dimensions:
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                    - {expression: conversion_action_name, name: conversion_action_name, type: STRING}
+                    - {expression: conversion_action_column_name, name: conversion_action_column_name, type: STRING}
+                metrics:
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(all_conversions), name: all_conversions, type: INT64}
+            google_ad_grant__country_report:
+                active: false
+                table_id: google_ad_grant__country_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_ad_grant__device_report:
+                active: true
+                table_id: google_ad_grant__device_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: device, name: device, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(all_conversions_website_calls), name: _all_conversions_website_calls, type: INT64}
+                    - {expression: sum(all_conversions_calls_from_ads), name: _all_conversions_calls_from_ads, type: INT64}
+            google_ad_grant__gender_report:
+                active: false
+                table_id: google_ad_grant__gender_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: gender, name: gender, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_ad_grant__keyword_report:
+                active: false
+                table_id: google_ad_grant__keyword_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: string}
+                    - {expression: account_name, name: account_name, type: string}
+                    - {expression: ad_group_id, name: ad_group_id, type: STRING}
+                    - {expression: ad_group_criterion_criterion_id, name: ad_group_criterion_criterion_id, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: keyword_text, name: keyword_text, type: STRING}
+                    - {expression: keyword_match_type, name: keyword_match_type, type: STRING}
+                    - {expression: historical_creative_quality_score, name: historical_creative_quality_score, type: STRING}
+                    - {expression: historical_landing_page_quality_score, name: historical_landing_page_quality_score, type: STRING}
+                    - {expression: historical_search_predicted_ctr, name: historical_search_predicted_ctr, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: avg(absolute_top_impression_percentage), name: absolute_top_impression_percentage, type: FLOAT64}
+                    - {expression: avg(top_impression_percentage), name: top_impression_percentage, type: FLOAT64}
+                    - {expression: avg(search_absolute_top_impression_share), name: search_absolute_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_budget_lost_top_impression_share), name: search_budget_lost_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_budget_lost_absolute_top_impression_share), name: search_budget_lost_absolute_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_impression_share), name: search_impression_share, type: FLOAT64}
+                    - {expression: avg(search_rank_lost_absolute_top_impression_share), name: search_rank_lost_absolute_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_rank_lost_top_impression_share), name: search_rank_lost_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_top_impression_share), name: search_top_impression_share, type: FLOAT64}
+                    - {expression: avg(safe_cast(historical_quality_score as int64)), name: historical_quality_score, type: INT64}
+                    - {expression: sum(all_conversions_session_duration_1_00_all_web_site_data_), name: all_conversions_session_duration_1_00_all_web_site_data_, type: float64}
+                    - {expression: sum(all_conversions_website_calls), name: all_conversions_website_calls, type: float64}
+                    - {expression: sum(all_conversions_calls_from_ads), name: all_conversions_calls_from_ads, type: float64}
+                    - {expression: sum(all_conversions_appointment_thank_you_page_all_web_site_data_), name: all_conversions_appointment_thank_you_page_all_web_site_data_, type: float64}
+                    - {expression: sum(all_conversions_general_inquiry_all_web_site_data_), name: all_conversions_general_inquiry_all_web_site_data_, type: float64}
+                    - {expression: sum(all_conversions_general_inquiry_new_test_crf_created_all_web_site_data_), name: all_conversions_general_inquiry_new_test_crf_created_all_web_site_data_, type: float64}
+                    - {expression: sum(all_conversions_contact_thank_you_page_all_web_site_data_), name: all_conversions_contact_thank_you_page_all_web_site_data_, type: float64}
+            google_ad_grant__region_report:
+                active: false
+                table_id: google_ad_grant__region_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: region, name: region, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_ad_grant__search_report:
+                active: false
+                table_id: google_ad_grant__search_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: keyword_ad_group_criterion, name: keyword_ad_group_criterion, type: STRING}
+                    - {expression: keyword_match_type, name: keyword_match_type, type: STRING}
+                    - {expression: keyword_text, name: keyword_text, type: STRING}
+                    - {expression: search_term, name: search_term, type: STRING}
+                    - {expression: search_term_match_type, name: search_term_match_type, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_ad_grant__postal_code_report:
+                active: false  ## To enable this report, please contact support.
+                table_id: google_ad_grant__postal_code_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: postal_code_name, name: _postal_code, type: STRING}
+                    - {expression: state_name, name: state, type: STRING}
+                    - {expression: city_name, name: city, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64} 
+    ## Connector Service    
+    google_ads_search:  # Google Commercial Search
+        source_dataset_id: organization_7_account_239_unfounded_cradle_account_googleads_client_worthiest_salesman #account_239_google_ads_fivetran_connector_
+        active: true
+        account_ids: [1094986801]
+        conversions:
+            - {event_name: "Calls from website", output_name: calls_from_website }
+            - {event_name: "Call from ad", output_name: call_from_ad }
+        delimiters:
+            ad_group: "-"
+            campaign: "-"
+        models:
+            google_commercial_search__ad_report:
+                active: true
+                table_id: 'google_commercial_search__ad_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: ad_group_id, name: ad_group_id, type: STRING}
+                    - {expression: ad_group_name, name: ad_group_name, type: STRING}
+                    - {expression: final_url, name: final_url, type: STRING}
+                    - {expression: path_1, name: path_1, type: STRING}
+                    - {expression: path_2, name: path_2, type: STRING}
+                    - {expression: description, name: description, type: STRING}
+                    - {expression: headline, name: headline, type: STRING}
+                    - {expression: full_display_url, name: full_display_url, type: STRING}
+                    - {expression: campaign_start_date, name: campaign_start_date, type: DATE}
+                    - {expression: campaign_end_date, name: campaign_end_date, type: DATE}
+                    - {expression: campaign_pos_1, name: campaign_pos_1, type: string}
+                    - {expression: campaign_pos_2, name: campaign_pos_2, type: string}
+                    - {expression: campaign_pos_3, name: campaign_pos_3, type: string}
+                    - {expression: campaign_pos_4, name: campaign_pos_4, type: string}
+                    - {expression: campaign_pos_5, name: campaign_pos_5, type: string}
+                    - {expression: ad_group_pos_1, name: ad_group_pos_1, type: string}
+                    - {expression: ad_group_pos_2, name: ad_group_pos_2, type: string}
+                    - {expression: ad_group_pos_3, name: ad_group_pos_3, type: string}
+                    - {expression: ad_group_pos_4, name: ad_group_pos_4, type: string}
+                    - {expression: ad_group_pos_5, name: ad_group_pos_5, type: string}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(all_conversions_calls_from_website), name: _all_conversions_calls_from_website, type: INT64}
+                    - {expression: sum(all_conversions_call_from_ad), name: _all_conversions_call_from_ad, type: INT64}
+            google_commercial_search__age_report:
+                active: true
+                table_id: google_commercial_search__age_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: age_range, name: age_range, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(all_conversions_calls_from_website), name: _all_conversions_calls_from_website, type: INT64}
+                    - {expression: sum(all_conversions_call_from_ad), name: _all_conversions_call_from_ad, type: INT64}
+            google_commercial_search__campaign_report:
+                active: true
+                table_id: 'google_commercial_search__campaign_report'
+                source_table_id: 'campaign_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: campaign_pos_1, name: campaign_pos_1, type: string}
+                    - {expression: campaign_pos_2, name: campaign_pos_2, type: string}
+                    - {expression: campaign_pos_3, name: campaign_pos_3, type: string}
+                    - {expression: campaign_pos_4, name: campaign_pos_4, type: string}
+                    - {expression: campaign_pos_5, name: campaign_pos_5, type: string}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(phone_calls), name: _phone_calls, type: float64}
+            google_commercial_search__city_report:
+                active: false
+                table_id: google_commercial_search__city_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: city, name: city, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}          
+            google_commercial_search__conversion_actions:
+                active: true
+                table_id: google_commercial_search__conversion_actions
+                dimensions:
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                    - {expression: conversion_action_name, name: conversion_action_name, type: STRING}
+                    - {expression: conversion_action_column_name, name: conversion_action_column_name, type: STRING}
+                metrics:
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(all_conversions), name: all_conversions, type: INT64}
+            google_commercial_search__country_report:
+                active: false
+                table_id: google_commercial_search__country_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_commercial_search__device_report:
+                active: true
+                table_id: google_commercial_search__device_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: device, name: device, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(all_conversions_calls_from_website), name: _all_conversions_calls_from_website, type: INT64}
+                    - {expression: sum(all_conversions_call_from_ad), name: _all_conversions_call_from_ad, type: INT64}
+            google_commercial_search__gender_report:
+                active: false
+                table_id: google_commercial_search__gender_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: gender, name: gender, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_commercial_search__keyword_report:
+                active: false
+                table_id: google_commercial_search__keyword_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: string}
+                    - {expression: account_name, name: account_name, type: string}
+                    - {expression: ad_group_id, name: ad_group_id, type: STRING}
+                    - {expression: ad_group_criterion_criterion_id, name: ad_group_criterion_criterion_id, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: keyword_text, name: keyword_text, type: STRING}
+                    - {expression: keyword_match_type, name: keyword_match_type, type: STRING}
+                    - {expression: historical_creative_quality_score, name: historical_creative_quality_score, type: STRING}
+                    - {expression: historical_landing_page_quality_score, name: historical_landing_page_quality_score, type: STRING}
+                    - {expression: historical_search_predicted_ctr, name: historical_search_predicted_ctr, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: avg(absolute_top_impression_percentage), name: absolute_top_impression_percentage, type: FLOAT64}
+                    - {expression: avg(top_impression_percentage), name: top_impression_percentage, type: FLOAT64}
+                    - {expression: avg(search_absolute_top_impression_share), name: search_absolute_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_budget_lost_top_impression_share), name: search_budget_lost_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_budget_lost_absolute_top_impression_share), name: search_budget_lost_absolute_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_impression_share), name: search_impression_share, type: FLOAT64}
+                    - {expression: avg(search_rank_lost_absolute_top_impression_share), name: search_rank_lost_absolute_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_rank_lost_top_impression_share), name: search_rank_lost_top_impression_share, type: FLOAT64}
+                    - {expression: avg(search_top_impression_share), name: search_top_impression_share, type: FLOAT64}
+                    - {expression: avg(safe_cast(historical_quality_score as int64)), name: historical_quality_score, type: INT64}
+            google_commercial_search__region_report:
+                active: false
+                table_id: google_commercial_search__region_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: country, name: country, type: STRING}
+                    - {expression: region, name: region, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_commercial_search__search_report:
+                active: false
+                table_id: google_commercial_search__search_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: keyword_ad_group_criterion, name: keyword_ad_group_criterion, type: STRING}
+                    - {expression: keyword_match_type, name: keyword_match_type, type: STRING}
+                    - {expression: keyword_text, name: keyword_text, type: STRING}
+                    - {expression: search_term, name: search_term, type: STRING}
+                    - {expression: search_term_match_type, name: search_term_match_type, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+            google_commercial_search__postal_code_report:
+                active: false  ## To enable this report, please contact support.
+                table_id: google_commercial_search__postal_code_report
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: account_id, name: account_id, type: STRING}
+                    - {expression: account_name, name: account_name, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: postal_code_name, name: _postal_code, type: STRING}
+                    - {expression: state_name, name: state, type: STRING}
+                    - {expression: city_name, name: city, type: STRING}
+                    - {expression: last_synced_at, name: last_synced_at, type: DATETIME}
+                    - {expression: last_data_date, name: last_data_date, type: DATE}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: sum(conversions_value), name: _revenue, type: FLOAT64}
+                    - {expression: sum(cost), name: _cost, type: FLOAT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64} 
+            google_commercial_search__campaign_report_custom_conversions:
+                active: true
+                table_id: 'google_commercial_search__campaign_report_custom_conversions'
+                source_table_id: 'campaign_report_custom_conversions'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: conversion_action_name, name: conversion_action_name, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                metrics:
+                    - {expression: sum(all_conversions), name: all_conversions, type: FLOAT64}
+                    - {expression: sum(all_conversions_value), name: all_conversions_value, type: FLOAT64}
+                    - {expression: sum(conversions), name: conversions, type: FLOAT64}
+                    - {expression: sum(conversions_value), name: conversions_value, type: FLOAT64}
+    ## Connector Service     
+    agility_ads:
+        source_dataset_id: 'wired-method-217616.tc_digital_metrics'
+        active: true
+        advertiser_ids: [e51u0ew]
+        regexp_filters:
+            ## - { dimension: 'campaign_name', expression: "Name", result: true }
+        conversions:
+        delimiters:
+            ad_group: "-"
+            campaign: "-"
+        models:
+            agility__conversion_name_report:
+                active: true
+                table_id: 'agility__conversion_name_report'
+                dimensions:
+                    - {expression: advertiser_id, name: advertiser_id, type: STRING}
+                    - {expression: advertiser_name, name: advertiser_name, type: STRING}
+                    - {expression: attribution_type, name: attribution_type, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: campaign_token, name: campaign_token, type: STRING}
+                    - {expression: conversion_name, name: conversion_name, type: STRING}
+                    - {expression: conversion_name_humanized, name: conversion_name_humanized, type: STRING}
+                    - {expression: conversion_placement_id, name: conversion_placement_id, type: INTEGER}
+                    - {expression: date, name: date, type: DATE}
+                metrics:
+                    - {expression: sum(conversion_value), name: _conversion_value, type: INTEGER}
+            agility__ad_report:
+                active: true
+                table_id: 'agility__ad_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: advertiser_id, name: advertiser_id, type: STRING}
+                    - {expression: advertiser_name, name: advertiser_name, type: STRING}
+                    - {expression: ad_group_id, name: ad_group_id, type: STRING}
+                    - {expression: ad_group_name, name: ad_group_name, type: STRING}
+                    - {expression: ad_group_token, name: ad_group_token, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: campaign_token, name: campaign_token, type: STRING}
+                    - {expression: campaign_pos_1, name: campaign_pos_1, type: string}
+                    - {expression: campaign_pos_2, name: campaign_pos_2, type: string}
+                    - {expression: campaign_pos_3, name: campaign_pos_3, type: string}
+                    - {expression: campaign_pos_4, name: campaign_pos_4, type: string}
+                    - {expression: campaign_pos_5, name: campaign_pos_5, type: string}
+                    - {expression: ad_group_pos_1, name: ad_group_pos_1, type: string}
+                    - {expression: ad_group_pos_2, name: ad_group_pos_2, type: string}
+                    - {expression: ad_group_pos_3, name: ad_group_pos_3, type: string}
+                    - {expression: ad_group_pos_4, name: ad_group_pos_4, type: string}
+                    - {expression: ad_group_pos_5, name: ad_group_pos_5, type: string}
+                    - {expression: creative_id, name: creative_id, type: STRING}
+                    - {expression: creative, name: creative, type: STRING}
+                    - {expression: creative_token, name: creative_token, type: STRING}
+                metrics:
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: AVG(conversion_rate), name: _conversion_rate, type: FLOAT64}
+                    - {expression: sum(conversion_revenue), name: _conversion_revenue, type: FLOAT64}
+                    - {expression: sum(advertiser_cost), name: _advertiser_cost, type: FLOAT64}
+                    - {expression: sum(player_completed_views), name: _player_completed_views, type: INT64}
+                    - {expression: sum(tag_click_conversion_1), name: _tag_click_conversion_1, type: INT64}
+                    - {expression: sum(tag_click_conversion_2), name: _tag_click_conversion_2, type: INT64}
+                    - {expression: sum(tag_click_conversion_3), name: _tag_click_conversion_3, type: INT64}
+                    - {expression: sum(tag_click_conversion_4), name: _tag_click_conversion_4, type: INT64}
+                    - {expression: sum(tag_click_conversion_5), name: _tag_click_conversion_5, type: INT64}
+                    - {expression: sum(tag_click_conversion_6), name: _tag_click_conversion_6, type: INT64}
+                    - {expression: sum(tag_click_conversion_7), name: _tag_click_conversion_7, type: INT64}
+                    - {expression: sum(tag_click_conversion_8), name: _tag_click_conversion_8, type: INT64}
+                    - {expression: sum(tag_click_conversion_9), name: _tag_click_conversion_9, type: INT64}
+                    - {expression: sum(tag_click_conversion_10), name: _tag_click_conversion_10, type: INT64}
+                    - {expression: sum(tag_click_revenue_1), name: _tag_click_revenue_1, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_2), name: _tag_click_revenue_2, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_3), name: _tag_click_revenue_3, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_4), name: _tag_click_revenue_4, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_5), name: _tag_click_revenue_5, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_6), name: _tag_click_revenue_6, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_7), name: _tag_click_revenue_7, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_8), name: _tag_click_revenue_8, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_9), name: _tag_click_revenue_9, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_10), name: _tag_click_revenue_10, type: FLOAT64}
+                    - {expression: sum(tag_view_through_conversion_1), name: _tag_view_through_conversion_1, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_2), name: _tag_view_through_conversion_2, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_3), name: _tag_view_through_conversion_3, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_4), name: _tag_view_through_conversion_4, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_5), name: _tag_view_through_conversion_5, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_6), name: _tag_view_through_conversion_6, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_7), name: _tag_view_through_conversion_7, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_8), name: _tag_view_through_conversion_8, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_9), name: _tag_view_through_conversion_9, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_10), name: _tag_view_through_conversion_10, type: INT64}
+                    - {expression: sum(tag_view_through_revenue_1), name: _tag_view_through_revenue_1, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_2), name: _tag_view_through_revenue_2, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_3), name: _tag_view_through_revenue_3, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_4), name: _tag_view_through_revenue_4, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_5), name: _tag_view_through_revenue_5, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_6), name: _tag_view_through_revenue_6, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_7), name: _tag_view_through_revenue_7, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_8), name: _tag_view_through_revenue_8, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_9), name: _tag_view_through_revenue_9, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_10), name: _tag_view_through_revenue_10, type: FLOAT64}
+            agility__device_report:
+                active: true
+                table_id: 'agility__device_report'
+                dimensions:
+                    - {expression: date, name: date, type: DATE}
+                    - {expression: advertiser_id, name: advertiser_id, type: STRING}
+                    - {expression: advertiser_name, name: advertiser_name, type: STRING}
+                    - {expression: ad_group_id, name: ad_group_id, type: STRING}
+                    - {expression: ad_group_name, name: ad_group_name, type: STRING}
+                    - {expression: ad_group_token, name: ad_group_token, type: STRING}
+                    - {expression: campaign_id, name: campaign_id, type: STRING}
+                    - {expression: campaign_name, name: campaign_name, type: STRING}
+                    - {expression: campaign_token, name: campaign_token, type: STRING}
+                    - {expression: device, name: device, type: STRING}
+                    - {expression: browser, name: browser, type: STRING}
+                metrics:
+                    - {expression: sum(bids), name: _bigs, type: INT64}
+                    - {expression: sum(clicks), name: _clicks, type: INT64}
+                    - {expression: sum(impressions), name: _impressions, type: INT64}
+                    - {expression: sum(conversions), name: _conversions, type: INT64}
+                    - {expression: AVG(conversion_rate), name: _conversion_rate, type: FLOAT64}
+                    - {expression: sum(conversion_revenue), name: _conversion_revenue, type: FLOAT64}
+                    - {expression: sum(advertiser_cost), name: _advertiser_cost, type: FLOAT64}
+                    - {expression: sum(tag_click_conversion_1), name: _tag_click_conversion_1, type: INT64}
+                    - {expression: sum(tag_click_conversion_2), name: _tag_click_conversion_2, type: INT64}
+                    - {expression: sum(tag_click_conversion_3), name: _tag_click_conversion_3, type: INT64}
+                    - {expression: sum(tag_click_conversion_4), name: _tag_click_conversion_4, type: INT64}
+                    - {expression: sum(tag_click_conversion_5), name: _tag_click_conversion_5, type: INT64}
+                    - {expression: sum(tag_click_conversion_6), name: _tag_click_conversion_6, type: INT64}
+                    - {expression: sum(tag_click_conversion_7), name: _tag_click_conversion_7, type: INT64}
+                    - {expression: sum(tag_click_conversion_8), name: _tag_click_conversion_8, type: INT64}
+                    - {expression: sum(tag_click_conversion_9), name: _tag_click_conversion_9, type: INT64}
+                    - {expression: sum(tag_click_conversion_10), name: _tag_click_conversion_10, type: INT64}
+                    - {expression: sum(tag_click_revenue_1), name: _tag_click_revenue_1, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_2), name: _tag_click_revenue_2, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_3), name: _tag_click_revenue_3, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_4), name: _tag_click_revenue_4, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_5), name: _tag_click_revenue_5, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_6), name: _tag_click_revenue_6, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_7), name: _tag_click_revenue_7, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_8), name: _tag_click_revenue_8, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_9), name: _tag_click_revenue_9, type: FLOAT64}
+                    - {expression: sum(tag_click_revenue_10), name: _tag_click_revenue_10, type: FLOAT64}
+                    - {expression: sum(tag_view_through_conversion_1), name: _tag_view_through_conversion_1, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_2), name: _tag_view_through_conversion_2, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_3), name: _tag_view_through_conversion_3, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_4), name: _tag_view_through_conversion_4, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_5), name: _tag_view_through_conversion_5, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_6), name: _tag_view_through_conversion_6, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_7), name: _tag_view_through_conversion_7, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_8), name: _tag_view_through_conversion_8, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_9), name: _tag_view_through_conversion_9, type: INT64}
+                    - {expression: sum(tag_view_through_conversion_10), name: _tag_view_through_conversion_10, type: INT64}
+                    - {expression: sum(tag_view_through_revenue_1), name: _tag_view_through_revenue_1, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_2), name: _tag_view_through_revenue_2, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_3), name: _tag_view_through_revenue_3, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_4), name: _tag_view_through_revenue_4, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_5), name: _tag_view_through_revenue_5, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_6), name: _tag_view_through_revenue_6, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_7), name: _tag_view_through_revenue_7, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_8), name: _tag_view_through_revenue_8, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_9), name: _tag_view_through_revenue_9, type: FLOAT64}
+                    - {expression: sum(tag_view_through_revenue_10), name: _tag_view_through_revenue_10, type: FLOAT64}
