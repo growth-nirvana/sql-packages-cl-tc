@@ -26,7 +26,7 @@ CREATE OR REPLACE TABLE
     AS(
         with 
 
-        , campaigns as(
+        campaigns as(
             select
                 *
             from
