@@ -57,8 +57,7 @@ CREATE OR REPLACE TABLE
                 *
             from
                 {{source_dataset_id}}.campaign_history
-            qualify rank() over(partition by id order by updated_at desc) = 1
-            and row_number() over(partition by id, updated_at) = 1
+            where _fivetran_active = true
         )
         
         , accounts as(
